@@ -43,6 +43,13 @@ function create360Viewer (opt){
             depth: 1
     }
 
+    var gl = regl._gl;
+    var destroyed = false;
+
+    var texture = regl.texture(getTextureParams(opt.image))
+
+    // var drawMesh = 
+
 }
 
 
