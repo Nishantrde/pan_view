@@ -1,5 +1,177 @@
-.App {
+:root {
+  --bg-solid: #02030a;
+  --bg-texture: radial-gradient(circle at 25% 5%, rgba(93, 247, 255, 0.15), transparent 42%);
+  --bg-hero: radial-gradient(circle at 80% 5%, rgba(255, 255, 255, 0.1), transparent 48%);
+  --bg: var(--bg-texture), var(--bg-hero), var(--bg-solid);
+  --card: rgba(6, 8, 18, 0.92);
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #5df7ff;
+  --text: #e8f2ff;
+}
+
+.App-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem clamp(1rem, 3vw, 2.2rem);
+  background: var(--bg);
+}
+
+.app-header h1 {
+  margin: 0.35rem 0;
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  letter-spacing: -0.02em;
+}
+
+.app-header p {
   margin: 0;
-  padding: 0;
+  max-width: 540px;
+  color: rgba(232, 242, 255, 0.82);
+  line-height: 1.6;
+}
+
+.app-header {
+  color: var(--text);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.78rem;
+  margin: 0;
+  color: var(--accent);
+}
+
+.viewer-shell {
+  position: relative;
+  flex: 1;
+  border-radius: 1.25rem;
+  border: 1px solid var(--border);
+  background: linear-gradient(145deg, rgba(6, 7, 18, 0.92), rgba(2, 3, 8, 0.92));
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
   overflow: hidden;
+}
+
+.viewer-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(2, 3, 8, 0), rgba(2, 3, 8, 0.8));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.viewer-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  z-index: 0;
+  touch-action: none;
+  cursor: grab;
+}
+
+.viewer-canvas:active {
+  cursor: grabbing;
+}
+
+.camera-preview {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  width: min(220px, 24vw);
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  background: #000;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.status-panel {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: min(320px, 38vw);
+  padding: 1rem 1.2rem;
+  background: rgba(6, 8, 18, 0.88);
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  color: rgba(232, 242, 255, 0.75);
+}
+
+.status-row strong {
+  font-size: 1rem;
+}
+
+.status-message {
+  margin: 0.65rem 0 0.35rem;
+  font-size: 0.85rem;
+  color: rgba(232, 242, 255, 0.92);
+}
+
+.status-foot {
+  margin: 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.control-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(2, 3, 8, 0.95);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35);
+}
+
+.control-bar button {
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #03030a;
+  background: linear-gradient(120deg, var(--accent), #8c5efb);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.control-bar button:not(.ghost):hover {
+  transform: translateY(-2px) scale(1.005);
+  box-shadow: 0 10px 20px rgba(92, 247, 255, 0.3);
+}
+
+.control-bar button.ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 760px) {
+  .status-panel {
+    width: calc(100% - 2rem);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .camera-preview {
+    width: min(180px, 40vw);
+    right: 0.75rem;
+    bottom: 0.75rem;
+  }
 }
